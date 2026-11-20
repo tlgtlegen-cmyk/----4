@@ -1,0 +1,83 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Басты бет";
+}
+
+<section class="hero-panel">
+    <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> 4-АПТА · MVC ЖОБАСЫ</div>
+        <h1>Деректерді<br /><span>дұрыс жеткізу.</span></h1>
+        <p>Пайдаланушыны тіркеу және тексеру жүйесі. Қауіпсіз деректер ағыны — ViewModel-ден доменге дейін.</p>
+        <div class="hero-actions">
+            <a class="button button-primary" asp-controller="Users" asp-action="Register">Тіркеуді бастау <span>↗</span></a>
+            <a class="button button-quiet" asp-controller="Users" asp-action="List">Қолданушылар тізімі <span>→</span></a>
+        </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="art-card">
+            <div class="art-card-head"><span class="art-check">✓</span><span class="art-dots">•••</span></div>
+            <div class="art-line wide"></div><div class="art-line"></div>
+            <div class="art-field"><span>ViewModel</span><b>●</b></div>
+            <div class="art-field"><span>Деректер тексерілді</span><b>✓</b></div>
+            <div class="art-success">✓ &nbsp; Қауіпсіз сақталды</div>
+        </div>
+        <span class="float-token token-vm">VM</span><span class="float-token token-cs">C#</span>
+        <span class="art-spark spark-one">✳</span><span class="art-spark spark-two">✦</span>
+    </div>
+    <div class="hero-index">01 <span>/</span> 04</div>
+</section>
+
+<div class="section-heading">
+    <div><div class="eyebrow muted-eyebrow">ЖОБА КӨРСЕТКІШТЕРІ</div><h2>Жүйе туралы</h2></div>
+    <span class="live-status"><span></span> Деректер жаңартылды</span>
+</div>
+<section class="stats-grid">
+    <article class="stat-card">
+        <div class="stat-top"><span class="stat-icon lavender">♙</span><span class="stat-change">ЖАЛПЫ</span></div>
+        <div class="stat-number">@Model.TotalUsers</div><div class="stat-label">Тіркелген қолданушы</div>
+        <div class="stat-foot">SQLite дерекқорындағы жазбалар</div>
+    </article>
+    <article class="stat-card">
+        <div class="stat-top"><span class="stat-icon mint">✓</span><span class="stat-change">НАҚТЫ УАҚЫТ</span></div>
+        <div class="stat-number">@Model.SuccessfulRegistrations</div><div class="stat-label">Сәтті тіркелу</div>
+        <div class="stat-foot">Серверде сақталған тіркелімдер</div>
+    </article>
+    <article class="stat-card stat-card-validation">
+        <div class="stat-top"><span class="stat-icon peach">⌁</span><span class="stat-change">БЕЛСЕНДІ</span></div>
+        <div class="stat-number">06 <small>тексеру</small></div><div class="stat-label">Валидация ережесі</div>
+        <div class="stat-foot">Дерек сапасы әр қадамда қорғалады</div>
+    </article>
+</section>
+
+<section class="lower-grid">
+    <article class="content-card validation-card">
+        <div class="card-heading"><div><div class="eyebrow muted-eyebrow">ҚОРҒАНЫС ҚАБАТТАРЫ</div><h2>Тексеру жүйесі</h2></div><span class="round-arrow">↗</span></div>
+        <div class="validation-list">
+            <div class="validation-row"><span class="validation-mark">Aa</span><div><strong>Data Annotations</strong><span>Required, Range, Compare және басқалары</span></div><span class="row-status">ҚОСУЛЫ</span></div>
+            <div class="validation-row"><span class="validation-mark custom">✳</span><div><strong>Арнайы тексеру</strong><span>Күрделі құпиясөз атрибуты</span></div><span class="row-status">ҚОСУЛЫ</span></div>
+            <div class="validation-row"><span class="validation-mark server">⌘</span><div><strong>Серверлік ереже</strong><span>IValidatableObject және ModelState</span></div><span class="row-status">ҚОСУЛЫ</span></div>
+            <div class="validation-row"><span class="validation-mark client">◉</span><div><strong>Браузерлік тексеру</strong><span>jQuery Unobtrusive Validation</span></div><span class="row-status">ҚОСУЛЫ</span></div>
+        </div>
+    </article>
+    <article class="content-card recent-card">
+        <div class="card-heading"><div><div class="eyebrow muted-eyebrow">СОҢҒЫ ӘРЕКЕТ</div><h2>Жаңа қолданушылар</h2></div><a class="text-link" asp-controller="Users" asp-action="List">Барлығы <span>→</span></a></div>
+        @if (Model.RecentUsers.Count == 0)
+        {
+            <div class="mini-empty"><span>♙</span><p>Әзірше қолданушы жоқ.</p><a asp-controller="Users" asp-action="Register">Алғашқы тіркелімді қосыңыз →</a></div>
+        }
+        else
+        {
+            <div class="recent-list">
+                @foreach (var user in Model.RecentUsers)
+                {
+                    <a class="recent-user" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id">
+                        <span class="user-initials">@user.FullName.Trim().Substring(0, 1).ToUpperInvariant()</span>
+                        <span class="recent-name"><strong>@user.FullName</strong><small>@user.Email</small></span>
+                        <span class="recent-date">@user.CreatedAt.ToLocalTime().ToString("dd.MM")</span>
+                    </a>
+                }
+            </div>
+        }
+    </article>
+</section>

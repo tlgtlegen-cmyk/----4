@@ -1,0 +1,22 @@
+@model UserDetailsViewModel
+@{
+    ViewData["Title"] = "Қолданушы мәліметі";
+}
+
+<div class="page-intro">
+    <div><div class="eyebrow muted-eyebrow">ҚОЛДАНУШЫЛАР · ЖЕКЕ МӘЛІМЕТ</div><h1>Қолданушы ақпараты</h1><p>Қауіпсіз түрде көрсетілетін тіркелім мәліметтері.</p></div>
+    <a class="button button-quiet" asp-action="List">← Тізімге қайту</a>
+</div>
+<section class="content-card detail-card">
+    <div class="detail-profile">
+        <span class="detail-avatar">@Model.FullName.Trim().Substring(0, 1).ToUpperInvariant()</span>
+        <div><span class="eyebrow muted-eyebrow">ТІРКЕЛГЕН ҚОЛДАНУШЫ</span><h2>@Model.FullName</h2><p>@Model.Email</p></div>
+    </div>
+    <div class="detail-grid">
+        <div class="detail-item"><span>Аты-жөні</span><strong>@Model.FullName</strong></div>
+        <div class="detail-item"><span>Электрондық пошта</span><strong>@Model.Email</strong></div>
+        <div class="detail-item"><span>Жасы</span><strong>@Model.Age жас</strong></div>
+        <div class="detail-item"><span>Тіркелген күні</span><strong>@Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy · HH:mm")</strong></div>
+    </div>
+    <div class="detail-safe"><span>♢</span> Қауіпсіздік мақсатында құпиясөз туралы мәлімет көрсетілмейді.</div>
+</section>

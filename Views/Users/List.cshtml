@@ -1,0 +1,66 @@
+@model IReadOnlyList<UserListItemViewModel>
+@{
+    ViewData["Title"] = "Қолданушылар";
+    var search = ViewData["Search"] as string ?? string.Empty;
+    var total = (int)(ViewData["TotalUsers"] ?? 0);
+}
+
+<div class="page-intro">
+    <div>
+        <div class="eyebrow muted-eyebrow">ҚОЛДАНУШЫЛАР · ДЕРЕКТЕР БАСҚАРУЫ</div>
+        <h1>Қолданушылар</h1>
+        <p>Тіркелген қолданушылардың тізімі және мәліметтері.</p>
+    </div>
+    <a class="button button-primary" asp-action="Register">＋ Жаңа тіркелім</a>
+</div>
+
+@if (TempData["SuccessMessage"] is string success)
+{
+    <div class="success-banner" role="status"><span>✓</span> @success</div>
+}
+
+<section class="content-card users-card">
+    <div class="users-toolbar">
+        <div class="users-count"><strong>@total</strong><span>тіркелген қолданушы</span></div>
+        <form asp-action="List" method="get" class="search-form">
+            <span class="search-icon">⌕</span>
+            <input type="search" name="search" value="@search" placeholder="Аты-жөні немесе пошта бойынша іздеу" aria-label="Қолданушыны іздеу" />
+            @if (!string.IsNullOrEmpty(search))
+            {
+                <a class="clear-search" asp-action="List">Тазарту</a>
+            }
+            <button type="submit" class="search-button">Іздеу</button>
+        </form>
+    </div>
+    @if (Model.Count == 0)
+    {
+        <div class="empty-state">
+            <span class="empty-icon">♙</span>
+            <h2>@(string.IsNullOrEmpty(search) ? "Әзірше тіркелім жоқ" : "Іздеу бойынша нәтиже табылмады")</h2>
+            <p>@(string.IsNullOrEmpty(search) ? "Алғашқы қолданушыны тіркеуден бастаңыз." : "Басқа аты-жөні немесе электрондық пошта арқылы іздеп көріңіз.")</p>
+            @if (string.IsNullOrEmpty(search))
+            {
+                <a class="button button-primary" asp-action="Register">Алғашқы қолданушыны тіркеу <span>↗</span></a>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table class="users-table">
+                <thead><tr><th>ҚОЛДАНУШЫ</th><th>ЖАСЫ</th><th>ТІРКЕЛГЕН КҮНІ</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td><div class="table-user"><span class="user-initials">@user.FullName.Trim().Substring(0, 1).ToUpperInvariant()</span><span><strong>@user.FullName</strong><small>@user.Email</small></span></div></td>
+                        <td><span class="age-pill">@user.Age жас</span></td>
+                        <td class="date-cell">@user.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy · HH:mm")</td>
+                        <td><a class="details-link" asp-action="Details" asp-route-id="@user.Id" aria-label="@user.FullName мәліметтері">→</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

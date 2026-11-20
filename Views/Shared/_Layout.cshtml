@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f4fb" />
+    <title>@ViewData["Title"] · AishaTulegen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" asp-controller="Home" asp-action="Index">
+                <span class="brand-mark">a<span>.</span></span>
+                <span class="brand-copy">aisha<span>ҚАУІПСІЗ ТІРКЕУ</span></span>
+            </a>
+            <div class="side-label">ЖҰМЫС КЕҢІСТІГІ</div>
+            <nav class="side-nav" aria-label="Негізгі мәзір">
+                <a class="side-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">
+                    <span class="nav-icon">⌂</span> Басты бет
+                </a>
+                <a class="side-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Register" ? "active" : "")" asp-controller="Users" asp-action="Register">
+                    <span class="nav-icon">＋</span> Тіркеу формасы
+                </a>
+                <a class="side-link @(ViewContext.RouteData.Values["action"]?.ToString() is "List" or "Details" ? "active" : "")" asp-controller="Users" asp-action="List">
+                    <span class="nav-icon">▤</span> Пайдаланушылар
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <div class="student-card">
+                    <span class="student-avatar">АТ</span>
+                    <div><strong>Айша Тілеген</strong><span>3-курс · Абай университеті</span></div>
+                </div>
+                <div class="sidebar-caption">4-АПТА · ДЕРЕК МОДЕЛІ</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <div class="breadcrumb">АБАЙ УНИВЕРСИТЕТІ <span>/</span> ВЕБ-ӘЗІРЛЕУ</div>
+                    <p class="topbar-title">Деректерді жеткізу модельдері</p>
+                </div>
+                <span class="week-badge"><span></span> 4-апта тапсырмасы</span>
+            </header>
+            <div class="page-content">
+                @RenderBody()
+            </div>
+            <footer class="footer">Айша Тілеген <span>·</span> Абай университеті <span>·</span> 2026</footer>
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

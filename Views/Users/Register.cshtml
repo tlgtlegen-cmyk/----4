@@ -1,0 +1,75 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Тіркелу";
+}
+
+<div class="page-intro">
+    <div>
+        <div class="eyebrow muted-eyebrow">ҚОЛДАНУШЫЛАР · ЖАҢА ТІРКЕЛІМ</div>
+        <h1>Жаңа тіркелім</h1>
+        <p>Деректеріңізді енгізіңіз — барлық ақпарат қауіпсіз тексеріледі.</p>
+    </div>
+    <span class="step-badge"><span>01</span> ТІРКЕЛУ ФОРМАСЫ</span>
+</div>
+
+<div class="form-layout">
+    <section class="content-card form-card">
+        <div class="form-card-heading">
+            <span class="form-heading-icon">✳</span>
+            <div><h2>Жеке мәліметтер</h2><p>Жұлдызшамен белгіленген өрістер міндетті</p></div>
+        </div>
+        <form asp-action="Register" method="post" novalidate>
+            <div asp-validation-summary="All" class="validation-summary" role="alert"></div>
+            <div class="field-grid">
+                <div class="field-group field-full">
+                    <label asp-for="FullName" class="field-label">Аты-жөні <span>*</span></label>
+                    <input asp-for="FullName" class="form-input" placeholder="Мысалы, Айша Тілеген" autocomplete="name" />
+                    <span asp-validation-for="FullName" class="field-error"></span>
+                </div>
+                <div class="field-group field-full">
+                    <label asp-for="Email" class="field-label">Электрондық пошта <span>*</span></label>
+                    <input asp-for="Email" class="form-input" placeholder="aisha@example.kz" autocomplete="email" />
+                    <span asp-validation-for="Email" class="field-error"></span>
+                </div>
+                <div class="field-group field-full">
+                    <label asp-for="Age" class="field-label">Жасы <span>*</span></label>
+                    <input asp-for="Age" class="form-input age-input" type="number" placeholder="Жасыңызды енгізіңіз" min="16" max="100" />
+                    <span asp-validation-for="Age" class="field-error"></span>
+                </div>
+                <div class="field-group">
+                    <label asp-for="Password" class="field-label">Құпиясөз <span>*</span></label>
+                    <div class="password-wrap">
+                        <input asp-for="Password" class="form-input" placeholder="Кемінде 8 таңба" autocomplete="new-password" />
+                        <button class="password-toggle" type="button" aria-label="Құпиясөзді көрсету" data-password-toggle>Көрсету</button>
+                    </div>
+                    <span asp-validation-for="Password" class="field-error"></span>
+                </div>
+                <div class="field-group">
+                    <label asp-for="ConfirmPassword" class="field-label">Құпиясөзді растау <span>*</span></label>
+                    <input asp-for="ConfirmPassword" class="form-input" placeholder="Құпиясөзді қайталаңыз" autocomplete="new-password" />
+                    <span asp-validation-for="ConfirmPassword" class="field-error"></span>
+                </div>
+            </div>
+            <div class="password-requirements">
+                <span class="requirement-shield">♢</span>
+                <div><strong>Қауіпсіз құпиясөз</strong><p>Бас және кіші әріп, сан және арнайы таңба қолданыңыз.</p></div>
+            </div>
+            <button type="submit" class="button button-primary submit-button">Тіркелу <span>↗</span></button>
+            <p class="form-privacy">Құпиясөзіңіз қорғалған түрде сақталады және ешқашан көрсетілмейді.</p>
+        </form>
+    </section>
+    <aside class="form-aside">
+        <div class="aside-card aside-purple">
+            <span class="aside-kicker">ДЕРЕКТЕРДІ ҚОРҒАУ</span>
+            <div class="shield-illustration"><span>✓</span></div>
+            <h3>Қауіпсіздік<br />бірінші орында.</h3>
+            <p>Құпиясөз ASP.NET Identity PasswordHasher арқылы хэштеледі. Түпнұсқа күйінде сақталмайды.</p>
+            <div class="aside-tags"><span>SHA-256</span><span>Salt</span><span>Identity</span></div>
+        </div>
+        <div class="aside-note"><span>ⓘ</span><p>Әр өріс браузерде және серверде тексеріледі. Қате болса, себебі өрістің астында көрсетіледі.</p></div>
+    </aside>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
